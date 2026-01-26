@@ -1,6 +1,6 @@
 ## Module 1 Homework – Docker & SQL
 
-This repository contains my solutions for **Module 1 (Docker & SQL)** of
+This repository contains my solutions for **Module 1 (docker-terraform)** of
 Data Engineering Zoomcamp 2026.
 
 ### Question 1. Understanding Docker images
@@ -34,7 +34,7 @@ The queries were executed directly on the Parquet and CSV files using DuckDB.
 Trips with `trip_distance <= 1` mile between
 `2025-11-01` (inclusive) and `2025-12-01` (exclusive).
 
-```
+```sql
 SELECT COUNT(*)
 FROM read_parquet('green_tripdata_2025-11.parquet')
 WHERE lpep_pickup_datetime >= TIMESTAMP '2025-11-01'
@@ -48,7 +48,7 @@ WHERE lpep_pickup_datetime >= TIMESTAMP '2025-11-01'
 
 Only trips with `trip_distance < 100` miles were considered.
 
-```
+```sql
 SELECT DATE(lpep_pickup_datetime) AS pickup_day,
        MAX(trip_distance) AS max_distance
 FROM read_parquet('green_tripdata_2025-11.parquet')
@@ -66,7 +66,7 @@ LIMIT 1;
 
 Pickup zone with the largest sum of `total_amount` on November 18, 2025.
 
-```
+```sql
 SELECT z."Zone", SUM(g.total_amount) AS total_amount
 FROM read_parquet('green_tripdata_2025-11.parquet') g
 JOIN read_csv_auto('taxi_zone_lookup.csv') z
@@ -84,7 +84,7 @@ LIMIT 1;
 For passengers picked up in East Harlem North in November 2025,
 the drop-off zone with the largest tip.
 
-```
+```sql
 SELECT z2."Zone", MAX(g.tip_amount) AS max_tip
 FROM read_parquet('green_tripdata_2025-11.parquet') g
 JOIN read_csv_auto('taxi_zone_lookup.csv') z1
@@ -106,5 +106,7 @@ LIMIT 1;
 The correct Terraform workflow is:
 
 `terraform init`
+
 `terraform apply -auto-approve`
+
 `terraform destroy`
